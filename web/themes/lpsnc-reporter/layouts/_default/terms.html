@@ -1,0 +1,12 @@
+{{ define "main" }}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8">{{ .Title }}</h1>
+    <ul class="list-disc pl-5">
+    {{ range .Data.Pages }}
+        <li>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+    {{ end }}
+    </ul>
+</div>
+{{ end }}

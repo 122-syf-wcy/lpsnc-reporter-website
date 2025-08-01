@@ -1,0 +1,13 @@
+{{ define "main" }}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">{{ .Title }}</h1>
+    <div class="space-y-4">
+    {{ range .Data.Pages }}
+        <div class="border-b pb-2">
+            <a href="{{ .RelPermalink }}" class="text-blue-600 hover:text-blue-800">{{ .Title }}</a>
+            <p class="text-sm text-gray-600">{{ .Date.Format "2006-01-02" }}</p>
+        </div>
+    {{ end }}
+    </div>
+</div>
+{{ end }}

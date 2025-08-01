@@ -1,0 +1,74 @@
+{{ define "main" }}
+<div class="bg-primary-blue text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">{{ .Title }}</h1>
+        <p class="text-xl md:text-2xl max-w-3xl mx-auto">共找到 {{ len .Pages }} 篇相关文章</p>
+    </div>
+</div>
+
+<div class="py-12">
+    <div class="container mx-auto px-4">
+        <!-- 返回新闻中心 -->
+        <div class="mb-8">
+            <a href="/news/" class="text-primary-blue hover:text-accent-orange font-medium inline-flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                返回新闻中心
+            </a>
+        </div>
+
+        <!-- 新闻列表 -->
+        {{ if .Pages }}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {{ range .Pages }}
+            <article class="news-card">
+                <a href="{{ .Permalink }}">
+                    {{ with .Params.image }}
+                        <img src="{{ . | relURL }}" alt="{{ $.Title }}" class="news-card__image">
+                    {{ else }}
+                        <img src="https://via.placeholder.com/800x450.png/1E3A8A/FFFFFF?text=新闻图片" alt="默认新闻图片" class="news-card__image">
+                    {{ end }}
+                </a>
+                <div class="news-card__content">
+                    <!-- 分类标签 -->
+                    <div class="mb-3">
+                        {{ range .Params.categories }}
+                            <span class="news-card__tag mr-2">{{ . }}</span>
+                        {{ end }}
+                    </div>
+                    
+                    <a href="{{ .Permalink }}">
+                        <h2 class="news-card__title hover:text-primary-blue transition-colors">{{ .Title }}</h2>
+                    </a>
+                    
+                    <!-- 摘要 -->
+                    {{ if .Summary }}
+                    <p class="text-gray-600 text-sm mt-2 line-clamp-2">{{ .Summary | truncate 120 }}</p>
+                    {{ end }}
+                    
+                    <div class="news-card__meta">
+                        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年01月02日" }}</time>
+                        <span>{{ .WordCount }}字</span>
+                    </div>
+                </div>
+            </article>
+            {{ end }}
+        </div>
+        {{ else }}
+        <div class="text-center py-16">
+            <div class="text-gray-400 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-600 mb-2">暂无相关文章</h3>
+            <p class="text-gray-500 mb-6">该分类下还没有发布任何文章</p>
+            <a href="/news/" class="bg-primary-blue text-white px-6 py-3 rounded-lg hover:bg-blue-800 transition-colors">
+                浏览全部新闻
+            </a>
+        </div>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

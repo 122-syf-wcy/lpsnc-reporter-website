@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>首页 on 六盘水师范学院计算机科学学院记者团</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content in 首页 on 六盘水师范学院计算机科学学院记者团</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 15 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我校举办2025年度学生社团文化节开幕式</title>
+      <link>http://localhost:1313/news/2025-campus-festival/</link>
+      <pubDate>Sat, 15 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/news/2025-campus-festival/</guid>
+      <description>为丰富校园文化生活，展现学生社团风采，我校于3月15日在大礼堂隆重举办2025年度学生社团文化节开幕式。校领导及各院系师生代表参加了本次活动。</description>
+    </item>
+    <item>
+      <title>计算机科学学院举办人工智能学术讲座</title>
+      <link>http://localhost:1313/news/2025-ai-lecture/</link>
+      <pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/news/2025-ai-lecture/</guid>
+      <description>为帮助学生了解学科前沿动态，拓宽学术视野，计算机科学学院于3月10日邀请知名AI专家赵教授，在科技楼报告厅举办了一场关于生成式AI的学术讲座。</description>
+    </item>
+    <item>
+      <title>记者团成功举办第十二届校园摄影大赛</title>
+      <link>http://localhost:1313/news/2025-photography-contest/</link>
+      <pubDate>Wed, 05 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/news/2025-photography-contest/</guid>
+      <description>由校团委主办、记者团承办的第十二届“光影流年，定格瞬间”校园摄影大赛圆满落幕。本次大赛共收到参赛作品500余幅，最终评选出一等奖3名，二等奖5名，三等奖10名。</description>
+    </item>
+    <item>
+      <title>图书馆升级改造工程圆满完成</title>
+      <link>http://localhost:1313/news/2025-library-renovation/</link>
+      <pubDate>Fri, 28 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/news/2025-library-renovation/</guid>
+      <description>历时6个月的图书馆升级改造工程于近日圆满完成，新增阅览座位500个，全面提升了学习环境。</description>
+    </item>
+    <item>
+      <title>化学学院在新能源材料研究领域取得重大突破</title>
+      <link>http://localhost:1313/news/2025-research-achievement/</link>
+      <pubDate>Thu, 20 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/news/2025-research-achievement/</guid>
+      <description>化学学院王教授团队在新型锂电池材料研究方面取得重大突破，相关成果发表在国际顶级期刊《Nature Energy》上。</description>
+    </item>
+    <item>
+      <title>青年志愿者协会开展温暖夕阳敬老志愿服务活动</title>
+      <link>http://localhost:1313/news/2025-volunteer-activity/</link>
+      <pubDate>Sat, 15 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/news/2025-volunteer-activity/</guid>
+      <description>校青年志愿者协会组织50名志愿者走进市养老院，开展温暖夕阳敬老志愿服务活动，用实际行动诠释新时代青年的责任担当。</description>
+    </item>
+  </channel>
+</rss>

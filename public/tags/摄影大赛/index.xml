@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>摄影大赛 on 六盘水师范学院计算机科学学院记者团</title>
+    <link>http://localhost:1313/tags/%E6%91%84%E5%BD%B1%E5%A4%A7%E8%B5%9B/</link>
+    <description>Recent content in 摄影大赛 on 六盘水师范学院计算机科学学院记者团</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 05 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E6%91%84%E5%BD%B1%E5%A4%A7%E8%B5%9B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>记者团成功举办第十二届校园摄影大赛</title>
+      <link>http://localhost:1313/news/2025-photography-contest/</link>
+      <pubDate>Wed, 05 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/news/2025-photography-contest/</guid>
+      <description>由校团委主办、记者团承办的第十二届“光影流年，定格瞬间”校园摄影大赛圆满落幕。本次大赛共收到参赛作品500余幅，最终评选出一等奖3名，二等奖5名，三等奖10名。</description>
+    </item>
+  </channel>
+</rss>

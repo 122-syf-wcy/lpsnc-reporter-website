@@ -1,0 +1,1046 @@
+{{ define "main" }}
+<!-- 简单的管理员界面演示 -->
+<div class="py-8 bg-gray-100 min-h-screen" style="margin-top: -2rem;">
+    <!-- 加载提示 -->
+    <div id="loading-indicator" class="fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <p class="text-gray-600">正在加载管理员控制台...</p>
+        </div>
+    </div>
+    <div class="container mx-auto px-4 max-w-7xl">
+        <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">管理员控制台</h1>
+                    <p class="text-gray-600">记者团后台管理系统</p>
+                </div>
+                <div class="text-sm text-gray-500 bg-blue-50 px-3 py-2 rounded-lg mt-4 md:mt-0">
+                    💡 演示版本 - 数据存储在浏览器本地
+                </div>
+            </div>
+            
+            <!-- 统计概览 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-full p-3 mr-4 shadow-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-blue-800" id="applications-count">0</div>
+                            <div class="text-blue-600 font-medium">申请总数</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-full p-3 mr-4 shadow-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-green-800" id="comments-count">0</div>
+                            <div class="text-green-600 font-medium">评论总数</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 border border-orange-200">
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-full p-3 mr-4 shadow-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-orange-800" id="pending-count">0</div>
+                            <div class="text-orange-600 font-medium">待审核</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 数据可视化图表 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- 申请部门分布图 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        申请部门分布
+                    </h3>
+                    <div id="department-chart" class="h-64"></div>
+                </div>
+                
+                <!-- 活动趋势图 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                        最近活动趋势
+                    </h3>
+                    <div id="activity-chart" class="h-64"></div>
+                </div>
+            </div>
+            
+            <!-- 标签页 -->
+            <div class="mb-8">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8">
+                        <button onclick="switchTab('applications')" id="tab-applications" 
+                                class="tab-button active py-3 px-4 border-b-3 border-blue-500 text-blue-600 font-semibold text-base bg-blue-50 rounded-t-lg"
+                                title="切换到申请管理" aria-label="申请管理标签页">
+                            📋 申请管理
+                        </button>
+                        <button onclick="switchTab('comments')" id="tab-comments" 
+                                class="tab-button py-3 px-4 border-b-3 border-transparent text-gray-600 hover:text-blue-600 hover:bg-gray-50 font-semibold text-base rounded-t-lg"
+                                title="切换到评论管理" aria-label="评论管理标签页">
+                            💬 评论管理
+                        </button>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- 申请管理 -->
+            <div id="applications-panel" class="tab-panel">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">申请列表</h2>
+                        <p class="text-gray-600 mt-1">管理所有记者团申请</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="exportApplications()" 
+                                class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors text-sm font-medium inline-flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            导出数据
+                        </button>
+                        <button onclick="addTestData()" 
+                                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium inline-flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            添加测试数据
+                        </button>
+                        <button onclick="generateSystemReport()" 
+                                class="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition-colors text-sm font-medium inline-flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            系统报告
+                        </button>
+                        <button onclick="clearApplications()" 
+                                class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm font-medium inline-flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                            清空所有
+                        </button>
+                    </div>
+                </div>
+                <div id="applications-list" class="space-y-4">
+                    <!-- 申请列表将在这里动态生成 -->
+                </div>
+            </div>
+            
+            <!-- 评论管理 -->
+            <div id="comments-panel" class="tab-panel hidden">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold text-gray-800">评论列表</h2>
+                    <div class="space-x-2">
+                        <button onclick="approveAllComments()" 
+                                class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors text-sm">
+                            批准所有
+                        </button>
+                        <button onclick="clearComments()" 
+                                class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm">
+                            清空所有评论
+                        </button>
+                    </div>
+                </div>
+                <div id="comments-management-list" class="space-y-4">
+                    <!-- 评论列表将在这里动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// 管理员界面 JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('管理员页面开始加载...');
+    
+    // 隐藏加载指示器
+    const loadingIndicator = document.getElementById('loading-indicator');
+    if (loadingIndicator) {
+        setTimeout(() => {
+            loadingIndicator.style.display = 'none';
+        }, 500);
+    }
+    
+    // 初始化管理员数据
+    loadAdminData();
+    
+    console.log('管理员页面加载完成');
+});
+
+function switchTab(tabName) {
+    // 切换标签页
+    document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active', 'border-blue-500', 'text-blue-600', 'bg-blue-50');
+        btn.classList.add('border-transparent', 'text-gray-600');
+    });
+    
+    document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.add('hidden');
+    });
+    
+    const activeTab = document.getElementById(`tab-${tabName}`);
+    activeTab.classList.add('active', 'border-blue-500', 'text-blue-600', 'bg-blue-50');
+    activeTab.classList.remove('border-transparent', 'text-gray-600');
+    document.getElementById(`${tabName}-panel`).classList.remove('hidden');
+}
+
+function loadAdminData() {
+    // 加载申请数据
+    const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+    document.getElementById('applications-count').textContent = applications.length;
+    
+    // 加载所有页面的评论数据
+    let totalComments = 0;
+    let pendingComments = 0;
+    const allComments = [];
+    
+    // 遍历所有可能的评论页面
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('comments_')) {
+            const pageComments = JSON.parse(localStorage.getItem(key) || '[]');
+            totalComments += pageComments.length;
+            pendingComments += pageComments.filter(c => !c.approved).length;
+            allComments.push(...pageComments.map(c => ({...c, pageUrl: key.replace('comments_', '')})));
+        }
+    }
+    
+    document.getElementById('comments-count').textContent = totalComments;
+    document.getElementById('pending-count').textContent = pendingComments;
+    
+    // 渲染申请列表
+    renderApplications(applications);
+    renderComments(allComments);
+    
+    // 绘制图表
+    drawCharts();
+}
+
+function renderApplications(applications) {
+    const container = document.getElementById('applications-list');
+    
+    if (applications.length === 0) {
+        container.innerHTML = `
+            <div class="text-center text-gray-500 py-12">
+                <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <p class="text-lg font-medium">暂无申请记录</p>
+                <p class="text-sm mt-2">可以点击"添加测试数据"按钮来体验功能</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = applications.map((app, index) => `
+        <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between">
+                <div class="flex-1">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                            ${app.name.charAt(0)}
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">${app.name}</h3>
+                            <span class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">${app.department}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 text-sm">
+                        <div><span class="font-medium">学号:</span> ${app.student_id}</div>
+                        <div><span class="font-medium">专业:</span> ${app.major}</div>
+                        <div><span class="font-medium">年级:</span> ${app.grade}</div>
+                        <div><span class="font-medium">手机:</span> ${app.phone}</div>
+                        <div><span class="font-medium">邮箱:</span> ${app.email}</div>
+                        <div><span class="font-medium">申请时间:</span> ${new Date(app.timestamp).toLocaleString('zh-CN')}</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="font-medium">申请理由:</span>
+                        <p class="text-gray-700 mt-1">${app.reason}</p>
+                    </div>
+                    
+                    ${app.skills ? `<div class="mb-3">
+                        <span class="font-medium">特长技能:</span>
+                        <p class="text-gray-700 mt-1">${app.skills}</p>
+                    </div>` : ''}
+                </div>
+                
+                <div class="ml-4">
+                    <button onclick="deleteApplication(${index})" 
+                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors text-sm">
+                        删除
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderComments(comments) {
+    const container = document.getElementById('comments-management-list');
+    
+    if (comments.length === 0) {
+        container.innerHTML = `
+            <div class="text-center text-gray-500 py-12">
+                <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                </svg>
+                <p class="text-lg font-medium">暂无评论记录</p>
+                <p class="text-sm mt-2">可以点击"添加测试数据"按钮来体验功能</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = comments.map((comment, index) => `
+        <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+            <div class="flex items-start justify-between">
+                <div class="flex-1">
+                    <div class="flex items-center mb-3">
+                        <h3 class="text-lg font-semibold text-gray-800 mr-4">${comment.name}</h3>
+                        <span class="bg-${comment.approved ? 'green' : 'yellow'}-100 text-${comment.approved ? 'green' : 'yellow'}-800 px-2 py-1 rounded-full text-xs">
+                            ${comment.approved ? '已审核' : '待审核'}
+                        </span>
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs ml-2">${comment.pageUrl}</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <p class="text-gray-700">${comment.content}</p>
+                    </div>
+                    
+                    <div class="text-sm text-gray-500">
+                        ${comment.email ? `邮箱: ${comment.email} | ` : ''}时间: ${new Date(comment.timestamp).toLocaleString('zh-CN')}
+                    </div>
+                </div>
+                
+                <div class="ml-4 space-x-2">
+                    ${!comment.approved ? `
+                        <button onclick="approveComment('${comment.pageUrl}', ${comment.id})" 
+                                class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition-colors text-sm">
+                            批准
+                        </button>
+                    ` : ''}
+                    <button onclick="deleteComment('${comment.pageUrl}', ${comment.id})" 
+                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors text-sm">
+                        删除
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function deleteApplication(index) {
+    if (confirm('确认删除此申请？')) {
+        const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+        applications.splice(index, 1);
+        localStorage.setItem('applications', JSON.stringify(applications));
+        loadAdminData();
+    }
+}
+
+function clearApplications() {
+    if (confirm('确认清空所有申请记录？此操作不可恢复！')) {
+        localStorage.removeItem('applications');
+        loadAdminData();
+    }
+}
+
+function approveComment(pageUrl, commentId) {
+    const key = `comments_${pageUrl}`;
+    const comments = JSON.parse(localStorage.getItem(key) || '[]');
+    const comment = comments.find(c => c.id === commentId);
+    if (comment) {
+        comment.approved = true;
+        localStorage.setItem(key, JSON.stringify(comments));
+        loadAdminData();
+    }
+}
+
+function deleteComment(pageUrl, commentId) {
+    if (confirm('确认删除此评论？')) {
+        const key = `comments_${pageUrl}`;
+        const comments = JSON.parse(localStorage.getItem(key) || '[]');
+        const filteredComments = comments.filter(c => c.id !== commentId);
+        localStorage.setItem(key, JSON.stringify(filteredComments));
+        loadAdminData();
+    }
+}
+
+function approveAllComments() {
+    if (confirm('确认批准所有待审核评论？')) {
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('comments_')) {
+                const comments = JSON.parse(localStorage.getItem(key) || '[]');
+                comments.forEach(comment => comment.approved = true);
+                localStorage.setItem(key, JSON.stringify(comments));
+            }
+        }
+        loadAdminData();
+    }
+}
+
+function clearComments() {
+    if (confirm('确认清空所有评论记录？此操作不可恢复！')) {
+        for (let i = localStorage.length - 1; i >= 0; i--) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('comments_')) {
+                localStorage.removeItem(key);
+            }
+        }
+        loadAdminData();
+        showNotification('所有评论已清空！', 'success');
+    }
+}
+
+// 导出评论数据
+function exportComments() {
+    const allComments = [];
+    
+    // 收集所有页面的评论
+    for (let key in localStorage) {
+        if (key.startsWith('comments_')) {
+            const pageComments = JSON.parse(localStorage.getItem(key) || '[]');
+            const pagePath = key.replace('comments_', '');
+            pageComments.forEach(comment => {
+                allComments.push({
+                    ...comment,
+                    page: pagePath
+                });
+            });
+        }
+    }
+    
+    if (allComments.length === 0) {
+        alert('暂无评论数据可导出！');
+        return;
+    }
+    
+    // 创建CSV内容
+    const headers = ['姓名', '邮箱', '评论内容', '页面', '状态', '评论时间'];
+    const csvContent = [
+        headers.join(','),
+        ...allComments.map(comment => [
+            comment.name || '',
+            comment.email || '',
+            (comment.content || '').replace(/,/g, '；').replace(/\n/g, ' '),
+            comment.page || '',
+            comment.approved ? '已审核' : '待审核',
+            new Date(comment.timestamp).toLocaleString('zh-CN')
+        ].map(field => `"${field}"`).join(','))
+    ].join('\n');
+    
+    // 下载文件
+    const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `记者团评论数据_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showNotification('评论数据导出成功！', 'success');
+}
+
+// 系统统计功能
+function generateSystemReport() {
+    const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+    const allComments = [];
+    
+    // 收集所有评论
+    for (let key in localStorage) {
+        if (key.startsWith('comments_')) {
+            const pageComments = JSON.parse(localStorage.getItem(key) || '[]');
+            allComments.push(...pageComments);
+        }
+    }
+    
+    // 申请统计
+    const deptStats = {};
+    applications.forEach(app => {
+        if (app.department) {
+            deptStats[app.department] = (deptStats[app.department] || 0) + 1;
+        }
+    });
+    
+    // 评论统计
+    const approvedComments = allComments.filter(c => c.approved).length;
+    const pendingComments = allComments.filter(c => !c.approved).length;
+    
+    // 生成报告
+    const report = {
+        totalApplications: applications.length,
+        totalComments: allComments.length,
+        approvedComments: approvedComments,
+        pendingComments: pendingComments,
+        departmentStats: deptStats,
+        generatedAt: new Date().toISOString()
+    };
+    
+    // 下载JSON报告
+    const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `记者团系统报告_${new Date().toISOString().split('T')[0]}.json`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showNotification('系统报告已生成！', 'success');
+}
+
+// 绘制数据可视化图表
+function drawCharts() {
+    drawDepartmentChart();
+    drawActivityChart();
+}
+
+// 绘制申请部门分布图
+function drawDepartmentChart() {
+    const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+    const deptStats = {};
+    
+    applications.forEach(app => {
+        if (app.department) {
+            deptStats[app.department] = (deptStats[app.department] || 0) + 1;
+        }
+    });
+    
+    const container = document.getElementById('department-chart');
+    
+    if (Object.keys(deptStats).length === 0) {
+        container.innerHTML = `
+            <div class="flex items-center justify-center h-full text-gray-500">
+                <div class="text-center">
+                    <svg class="w-12 h-12 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2-2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    <p>暂无数据</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    const total = Object.values(deptStats).reduce((sum, count) => sum + count, 0);
+    const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+    
+    let html = '<div class="space-y-3">';
+    Object.entries(deptStats).forEach(([dept, count], index) => {
+        const percentage = ((count / total) * 100).toFixed(1);
+        const color = colors[index % colors.length];
+        
+        html += `
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-4 h-4 rounded-full mr-3" style="background-color: ${color}"></div>
+                    <span class="text-sm font-medium text-gray-700">${dept}</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-32 h-2 bg-gray-200 rounded-full mr-3">
+                        <div class="h-2 rounded-full" style="background-color: ${color}; width: ${percentage}%"></div>
+                    </div>
+                    <span class="text-sm font-bold text-gray-800 w-12 text-right">${count}人</span>
+                </div>
+            </div>
+        `;
+    });
+    html += '</div>';
+    
+    container.innerHTML = html;
+}
+
+// 绘制活动趋势图
+function drawActivityChart() {
+    const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+    const allComments = [];
+    
+    // 收集所有评论
+    for (let key in localStorage) {
+        if (key.startsWith('comments_')) {
+            const pageComments = JSON.parse(localStorage.getItem(key) || '[]');
+            allComments.push(...pageComments);
+        }
+    }
+    
+    const container = document.getElementById('activity-chart');
+    
+    if (applications.length === 0 && allComments.length === 0) {
+        container.innerHTML = `
+            <div class="flex items-center justify-center h-full text-gray-500">
+                <div class="text-center">
+                    <svg class="w-12 h-12 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                    <p>暂无数据</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    // 按天统计最近7天的活动
+    const days = [];
+    const applicationData = [];
+    const commentData = [];
+    
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        const dateStr = date.toISOString().split('T')[0];
+        days.push(date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' }));
+        
+        // 统计当天申请数
+        const dayApplications = applications.filter(app => 
+            app.timestamp && app.timestamp.startsWith(dateStr)
+        ).length;
+        applicationData.push(dayApplications);
+        
+        // 统计当天评论数
+        const dayComments = allComments.filter(comment => 
+            comment.timestamp && comment.timestamp.startsWith(dateStr)
+        ).length;
+        commentData.push(dayComments);
+    }
+    
+    const maxValue = Math.max(...applicationData, ...commentData, 1);
+    
+    let html = `
+        <div class="space-y-4">
+            <div class="flex justify-center space-x-6 text-sm">
+                <div class="flex items-center">
+                    <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                    <span class="text-gray-600">申请数量</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                    <span class="text-gray-600">评论数量</span>
+                </div>
+            </div>
+            <div class="flex items-end justify-between h-40 space-x-2">
+    `;
+    
+    days.forEach((day, index) => {
+        const appHeight = maxValue > 0 ? (applicationData[index] / maxValue) * 120 : 0;
+        const commentHeight = maxValue > 0 ? (commentData[index] / maxValue) * 120 : 0;
+        
+        html += `
+            <div class="flex-1 flex flex-col items-center">
+                <div class="flex items-end space-x-1 mb-2">
+                    <div class="w-4 bg-blue-500 rounded-t" style="height: ${appHeight}px" title="申请: ${applicationData[index]}"></div>
+                    <div class="w-4 bg-green-500 rounded-t" style="height: ${commentHeight}px" title="评论: ${commentData[index]}"></div>
+                </div>
+                <div class="text-xs text-gray-500 text-center">${day}</div>
+            </div>
+        `;
+    });
+    
+    html += `
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}
+
+// 显示通知的函数
+function showNotification(message, type = 'info') {
+    // 创建通知元素
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 transition-all duration-300 transform translate-x-full`;
+    
+    // 根据类型设置样式
+    switch(type) {
+        case 'success':
+            notification.className += ' bg-green-500 text-white';
+            break;
+        case 'error':
+            notification.className += ' bg-red-500 text-white';
+            break;
+        case 'warning':
+            notification.className += ' bg-yellow-500 text-white';
+            break;
+        default:
+            notification.className += ' bg-blue-500 text-white';
+    }
+    
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <span>${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // 动画显示
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+    }, 100);
+    
+    // 自动隐藏
+    setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 4000);
+}
+
+// 添加测试数据（开发用）
+function addTestData() {
+    console.log('添加测试数据...');
+    
+    // 添加测试申请
+    const testApplications = [
+        {
+            name: '张三',
+            gender: '男',
+            student_id: '20210001',
+            major: '计算机科学与技术',
+            grade: '大二',
+            phone: '13800138000',
+            email: 'zhangsan@example.com',
+            wechat: 'zhangsan2021',
+            department: '技术部',
+            skills: '熟悉前端开发，会用JavaScript、HTML、CSS',
+            reason: '对媒体技术很感兴趣，希望能在记者团发挥自己的技术特长，为团队贡献力量。',
+            portfolio: 'https://github.com/zhangsan',
+            timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+            id: Date.now() - 1000,
+            agree_terms: 'on'
+        },
+        {
+            name: '李四',
+            gender: '女',
+            student_id: '20210002',
+            major: '新闻传播学',
+            grade: '大一',
+            phone: '13900139000',
+            email: 'lisi@example.com',
+            wechat: 'lisi2021',
+            department: '新闻部',
+            skills: '文字功底扎实，有校报投稿经验',
+            reason: '从小就喜欢写作，希望能在记者团提升自己的新闻写作能力，记录校园美好时光。',
+            portfolio: '',
+            timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
+            id: Date.now() - 500,
+            agree_terms: 'on'
+        },
+        {
+            name: '王五',
+            gender: '男',
+            student_id: '20210003',
+            major: '广告学',
+            grade: '大三',
+            phone: '13700137000',
+            email: 'wangwu@example.com',
+            wechat: 'wangwu2021',
+            department: '视觉设计部',
+            skills: '熟练使用PS、AI等设计软件，有设计作品集',
+            reason: '热爱视觉设计，希望能为记者团设计海报、标识等视觉元素，提升团队形象。',
+            portfolio: 'https://behance.net/wangwu',
+            timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
+            id: Date.now() - 200,
+            agree_terms: 'on'
+        }
+    ];
+    
+    // 添加测试评论
+    const testComments = [
+        {
+            name: '赵六',
+            email: 'zhaoliu@example.com',
+            content: '这篇关于人工智能讲座的文章写得很好，让我对AI技术有了更深入的了解！期待更多这样的活动。',
+            timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
+            id: Date.now() - 300,
+            approved: true
+        },
+        {
+            name: '孙七',
+            email: 'sunqi@example.com',
+            content: '摄影大赛的作品都很精彩，希望明年还能继续举办！我也想参加。',
+            timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+            id: Date.now() - 250,
+            approved: false
+        },
+        {
+            name: '周八',
+            email: 'zhouba@example.com',
+            content: '记者团的活动越来越丰富了，希望能有更多同学参与进来。',
+            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+            id: Date.now() - 150,
+            approved: true
+        }
+    ];
+    
+    // 保存测试数据
+    localStorage.setItem('applications', JSON.stringify(testApplications));
+    localStorage.setItem('comments_/news/2025-ai-lecture/', JSON.stringify([testComments[0]]));
+    localStorage.setItem('comments_/news/2025-photography-contest/', JSON.stringify([testComments[1]]));
+    localStorage.setItem('comments_/news/2025-campus-festival/', JSON.stringify([testComments[2]]));
+    
+    console.log('测试数据已添加');
+    loadAdminData();
+    showNotification('测试数据已添加成功！', 'success');
+}
+
+// 其他缺失的函数
+function deleteApplication(index) {
+    if (confirm('确认删除此申请？')) {
+        const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+        applications.splice(index, 1);
+        localStorage.setItem('applications', JSON.stringify(applications));
+        loadAdminData();
+        showNotification('申请已删除', 'success');
+    }
+}
+
+function clearApplications() {
+    if (confirm('确认清空所有申请记录？此操作不可恢复！')) {
+        localStorage.removeItem('applications');
+        loadAdminData();
+        showNotification('所有申请已清空', 'success');
+    }
+}
+
+function approveComment(pageUrl, commentId) {
+    const key = `comments_${pageUrl}`;
+    const comments = JSON.parse(localStorage.getItem(key) || '[]');
+    const comment = comments.find(c => c.id === commentId);
+    if (comment) {
+        comment.approved = true;
+        localStorage.setItem(key, JSON.stringify(comments));
+        loadAdminData();
+        showNotification('评论已批准', 'success');
+    }
+}
+
+function deleteComment(pageUrl, commentId) {
+    if (confirm('确认删除此评论？')) {
+        const key = `comments_${pageUrl}`;
+        const comments = JSON.parse(localStorage.getItem(key) || '[]');
+        const filteredComments = comments.filter(c => c.id !== commentId);
+        localStorage.setItem(key, JSON.stringify(filteredComments));
+        loadAdminData();
+        showNotification('评论已删除', 'success');
+    }
+}
+
+function approveAllComments() {
+    if (confirm('确认批准所有待审核评论？')) {
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('comments_')) {
+                const comments = JSON.parse(localStorage.getItem(key) || '[]');
+                comments.forEach(comment => comment.approved = true);
+                localStorage.setItem(key, JSON.stringify(comments));
+            }
+        }
+        loadAdminData();
+        showNotification('所有评论已批准', 'success');
+    }
+}
+
+function clearComments() {
+    if (confirm('确认清空所有评论记录？此操作不可恢复！')) {
+        for (let i = localStorage.length - 1; i >= 0; i--) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('comments_')) {
+                localStorage.removeItem(key);
+            }
+        }
+        loadAdminData();
+        showNotification('所有评论已清空', 'success');
+    }
+}
+
+// 导出评论数据
+function exportComments() {
+    const allComments = [];
+    
+    // 收集所有页面的评论
+    for (let key in localStorage) {
+        if (key.startsWith('comments_')) {
+            const pageComments = JSON.parse(localStorage.getItem(key) || '[]');
+            const pagePath = key.replace('comments_', '');
+            pageComments.forEach(comment => {
+                allComments.push({
+                    ...comment,
+                    page: pagePath
+                });
+            });
+        }
+    }
+    
+    if (allComments.length === 0) {
+        alert('暂无评论数据可导出！');
+        return;
+    }
+    
+    // 创建CSV内容
+    const headers = ['姓名', '邮箱', '评论内容', '页面', '状态', '评论时间'];
+    const csvContent = [
+        headers.join(','),
+        ...allComments.map(comment => [
+            comment.name || '',
+            comment.email || '',
+            (comment.content || '').replace(/,/g, '；').replace(/\n/g, ' '),
+            comment.page || '',
+            comment.approved ? '已审核' : '待审核',
+            new Date(comment.timestamp).toLocaleString('zh-CN')
+        ].map(field => `"${field}"`).join(','))
+    ].join('\n');
+    
+    // 下载文件
+    const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `记者团评论数据_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showNotification('评论数据导出成功！', 'success');
+}
+
+// 导出申请数据
+function exportApplications() {
+    const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+    if (applications.length === 0) {
+        alert('暂无申请数据可导出！');
+        return;
+    }
+    
+    // 创建CSV内容
+    const headers = ['姓名', '性别', '学号', '专业', '年级', '手机', '邮箱', '微信', '申请部门', '特长技能', '申请理由', '作品链接', '申请时间'];
+    const csvContent = [
+        headers.join(','),
+        ...applications.map(app => [
+            app.name || '',
+            app.gender || '',
+            app.student_id || '',
+            app.major || '',
+            app.grade || '',
+            app.phone || '',
+            app.email || '',
+            app.wechat || '',
+            app.department || '',
+            (app.skills || '').replace(/,/g, '；'),
+            (app.reason || '').replace(/,/g, '；'),
+            app.portfolio || '',
+            new Date(app.timestamp).toLocaleString('zh-CN')
+        ].map(field => `"${field}"`).join(','))
+    ].join('\n');
+    
+    // 下载文件
+    const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `记者团申请数据_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showNotification('申请数据导出成功！', 'success');
+}
+
+// 系统统计功能
+function generateSystemReport() {
+    const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+    const allComments = [];
+    
+    // 收集所有评论
+    for (let key in localStorage) {
+        if (key.startsWith('comments_')) {
+            const pageComments = JSON.parse(localStorage.getItem(key) || '[]');
+            allComments.push(...pageComments);
+        }
+    }
+    
+    // 申请统计
+    const deptStats = {};
+    applications.forEach(app => {
+        if (app.department) {
+            deptStats[app.department] = (deptStats[app.department] || 0) + 1;
+        }
+    });
+    
+    // 评论统计
+    const approvedComments = allComments.filter(c => c.approved).length;
+    const pendingComments = allComments.filter(c => !c.approved).length;
+    
+    // 生成报告
+    const report = {
+        totalApplications: applications.length,
+        totalComments: allComments.length,
+        approvedComments: approvedComments,
+        pendingComments: pendingComments,
+        departmentStats: deptStats,
+        generatedAt: new Date().toISOString()
+    };
+    
+    // 下载JSON报告
+    const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `记者团系统报告_${new Date().toISOString().split('T')[0]}.json`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showNotification('系统报告已生成！', 'success');
+}
+</script>
+
+<style>
+.tab-button.active {
+    border-color: #3b82f6 !important;
+    color: #3b82f6 !important;
+}
+</style>
+{{ end }}

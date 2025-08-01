@@ -1,0 +1,93 @@
+{{ define "main" }}
+<div class="bg-primary-blue text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">{{ .Title }}</h1>
+        <p class="text-xl md:text-2xl max-w-3xl mx-auto">校园动态，第一时间为您报道</p>
+    </div>
+</div>
+
+<div class="py-12">
+    <div class="container mx-auto px-4">
+        <!-- 分类筛选 -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+            <a href="/news/" class="bg-primary-blue text-white px-4 py-2 rounded-lg font-medium transition-colors hover:bg-blue-800">
+                全部新闻
+            </a>
+            <a href="/categories/校园要闻/" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors hover:bg-gray-300">
+                校园要闻
+            </a>
+            <a href="/categories/教学科研/" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors hover:bg-gray-300">
+                教学科研
+            </a>
+            <a href="/categories/团学活动/" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors hover:bg-gray-300">
+                团学活动
+            </a>
+        </div>
+
+        <!-- 新闻列表 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {{ $paginator := .Paginate .Pages }}
+            {{ range $paginator.Pages }}
+            <article class="news-card">
+                <a href="{{ .Permalink }}">
+                    {{ with .Params.image }}
+                        <img src="{{ . | relURL }}" alt="{{ $.Title }}" class="news-card__image">
+                    {{ else }}
+                        <img src="https://via.placeholder.com/800x450.png/1E3A8A/FFFFFF?text=新闻图片" alt="默认新闻图片" class="news-card__image">
+                    {{ end }}
+                </a>
+                <div class="news-card__content">
+                    <!-- 分类标签 -->
+                    <div class="mb-3">
+                        {{ range .Params.categories }}
+                            <a href="{{ "categories/" | relURL }}{{ . | urlize }}" class="news-card__tag mr-2">{{ . }}</a>
+                        {{ end }}
+                    </div>
+                    
+                    <a href="{{ .Permalink }}">
+                        <h2 class="news-card__title hover:text-primary-blue transition-colors">{{ .Title }}</h2>
+                    </a>
+                    
+                    <!-- 摘要 -->
+                    {{ if .Summary }}
+                    <p class="text-gray-600 text-sm mt-2 line-clamp-2">{{ .Summary | truncate 120 }}</p>
+                    {{ end }}
+                    
+                    <div class="news-card__meta">
+                        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年01月02日" }}</time>
+                        <span>{{ .WordCount }}字</span>
+                    </div>
+                </div>
+            </article>
+            {{ end }}
+        </div>
+        
+        <!-- 分页 -->
+        {{ if gt $paginator.TotalPages 1 }}
+        <div class="flex justify-center mt-12">
+            <nav class="flex space-x-2">
+                {{ if $paginator.HasPrev }}
+                    <a href="{{ $paginator.Prev.URL }}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                        上一页
+                    </a>
+                {{ end }}
+                
+                {{ range $paginator.Pagers }}
+                    {{ if eq . $paginator }}
+                        <span class="bg-primary-blue text-white px-4 py-2 rounded-lg">{{ .PageNumber }}</span>
+                    {{ else }}
+                        <a href="{{ .URL }}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">{{ .PageNumber }}</a>
+                    {{ end }}
+                {{ end }}
+                
+                {{ if $paginator.HasNext }}
+                    <a href="{{ $paginator.Next.URL }}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                        下一页
+                    </a>
+                {{ end }}
+            </nav>
+        </div>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

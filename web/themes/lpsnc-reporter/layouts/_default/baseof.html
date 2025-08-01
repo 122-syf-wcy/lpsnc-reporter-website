@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
-    {{ $styles := resources.Get "scss/main.scss" | resources.ToCSS | resources.PostCSS | resources.Minify | resources.Fingerprint }}
+    {{ $styles := resources.Get "scss/main.scss" | css.Sass | css.PostCSS | resources.Minify | resources.Fingerprint }}
     <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}">
     
     <!-- Open Graph / Twitter Card 数据 -->

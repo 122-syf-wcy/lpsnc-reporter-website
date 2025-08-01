@@ -1,0 +1,53 @@
+<footer class="bg-gray-800 text-white pt-10 pb-6">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- 关于我们 -->
+            <div>
+                <h3 class="text-xl font-bold mb-4 font-serif">关于我们</h3>
+                <p class="mb-4">六盘水师范学院计算机科学学院记者团是院内重要的学生媒体组织，负责校园新闻报道、活动宣传、媒体内容创作等工作。</p>
+                <div class="flex space-x-4 mt-4">
+                    <a href="{{ .Site.Params.social.weibo }}" class="text-white hover:text-accent-orange" target="_blank" rel="noopener noreferrer">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M10.098 20c-3.738 0-6.598-1.883-6.598-4.507 0-1.45.957-3.13 2.555-4.728 1.995-1.96 4.358-2.867 5.253-2.009.478.465.547 1.263.275 2.123-.142.438.063.496.29.17.195-.283.385-.56.385-.56s.975-.96 2.305-1.404c1.33-.444 1.115.613 1.115.613-.407 1.122-1.955 3.02-.677 3.48.817.293 1.932-1.024 2.267-1.552.335-.528.607-.927.607-.927s.158-.25.47-.334c.315-.086.63.13.63.13s1.542 1.123.677 2.552c-.865 1.43-2.555 3.52-2.555 3.52s-.49.747-.233 1.375c.258.627 1.142.272 1.142.272h.677c1.432 0 2.555 1.124 2.555 2.552 0 1.43-3.268 2.553-7.307 2.553s-7.307-1.124-7.307-2.553c0-1.428 1.125-2.552 2.555-2.552zm1.145-9.382c.913-1.683-.322-3.63-2.768-4.368-2.448-.738-4.97.023-5.884 1.707-.913 1.684.322 3.63 2.77 4.368 2.448.737 4.97-.023 5.882-1.707z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-white hover:text-accent-orange" onclick="alert('{{ .Site.Params.social.wechat }}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8.691 2c-3.891 0-7.05 2.504-7.05 5.59 0 1.54.794 2.926 2.03 3.932L2.24 14.474l2.773-1.386c.979.28 2.008.43 3.084.43.183 0 .364-.004.544-.013-.228-.653-.35-1.334-.35-2.043 0-3.502 3.3-6.342 7.374-6.342.196 0 .39.01.583.02C15.87 2.836 12.578 2 8.691 2zm.367 3.114c.535 0 .969.44.969.982 0 .541-.434.982-.969.982-.535 0-.969-.44-.969-.982 0-.542.434-.982.969-.982zm-4.877 1.964c-.535 0-.97-.44-.97-.982 0-.542.435-.982.97-.982.535 0 .969.44.969.982 0 .541-.434.982-.97.982zM18.747 16.8c0-2.587-2.552-4.687-5.698-4.687s-5.698 2.1-5.698 4.687c0 2.586 2.552 4.686 5.698 4.686.666 0 1.31-.094 1.908-.265l1.742.872-1.093-1.74c1.323-.663 2.14-1.715 2.14-2.882v-.67zm-7.563-1.117c-.387 0-.7-.317-.7-.707 0-.39.313-.708.7-.708.387 0 .7.317.7.708 0 .39-.313.707-.7.707zm3.77 0c-.387 0-.7-.317-.7-.707 0-.39.313-.708.7-.708.387 0 .7.317.7.708 0 .39-.313.707-.7.707z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 快速链接 -->
+            <div>
+                <h3 class="text-xl font-bold mb-4 font-serif">快速链接</h3>
+                <ul class="space-y-2">
+                    {{ range .Site.Menus.main }}
+                    <li>
+                        <a href="{{ .URL }}" class="hover:text-accent-orange transition-colors" 
+                           title="访问{{ .Name }}页面" aria-label="页脚导航到{{ .Name }}">{{ .Name }}</a>
+                    </li>
+                    {{ end }}
+
+                </ul>
+            </div>
+            
+            <!-- 联系我们 -->
+            <div>
+                <h3 class="text-xl font-bold mb-4 font-serif">联系我们</h3>
+                <address class="not-italic">
+                    <p class="mb-2">地址：贵州省六盘水市钟山区</p>
+                    <p class="mb-2">电话：0858-xxxxxxxx</p>
+                    <p class="mb-2">邮箱：reporter@lpssysu.edu.cn</p>
+                </address>
+            </div>
+        </div>
+        
+        <!-- 版权信息 -->
+        <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm">
+            <p>&copy; {{ now.Format "2006" }} {{ .Site.Title }}. 保留所有权利。</p>
+            <p class="mt-2">由 <a href="https://gohugo.io/" class="text-accent-orange hover:underline" target="_blank" rel="noopener noreferrer">Hugo</a> 和 <a href="https://tailwindcss.com/" class="text-accent-orange hover:underline" target="_blank" rel="noopener noreferrer">Tailwind CSS</a> 强力驱动</p>
+        </div>
+    </div>
+</footer>

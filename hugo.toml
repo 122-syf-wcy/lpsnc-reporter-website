@@ -1,0 +1,72 @@
+baseURL = 'https://example.org/'
+languageCode = 'zh-cn'
+title = '六盘水师范学院计算机科学学院记者团'
+theme = 'lpsnc-reporter'
+
+# 安全头部设置
+[server]
+  [[server.headers]]
+    for = "/**"
+    [server.headers.values]
+      X-Content-Type-Options = "nosniff"
+      Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://giscus.app https://utteranc.es; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: http: blob:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://api.github.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'"
+      Cache-Control = "public, max-age=3600"
+      Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+      X-Robots-Tag = "index, follow"
+
+# 菜单配置
+[menu]
+  [[menu.main]]
+    name = "首页"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "新闻中心"
+    url = "/news/"
+    weight = 2
+  [[menu.main]]
+    name = "记者团风采"
+    url = "/team/"
+    weight = 3
+  [[menu.main]]
+    name = "加入我们"
+    url = "/join/"
+    weight = 4
+  [[menu.main]]
+    name = "管理员"
+    url = "/admin/"
+    weight = 5
+
+[params]
+  description = "六盘水师范学院计算机科学学院记者团官方网站"
+  keywords = "六盘水师范学院,计算机科学学院,记者团,校园新闻,学生媒体"
+  mainSections = ["news"]
+  # Google Analytics ID (替换为你的GA4测量ID)
+  googleAnalytics = "G-XXXXXXXXXX"
+  
+  # 社交媒体链接
+  [params.social]
+    weibo = "https://weibo.com/example"
+    wechat = "记者团微信公众号"
+
+# 图片处理
+[imaging]
+  quality = 85
+  
+# 内容安全策略
+[security]
+  [security.funcs]
+    getenv = ['^HUGO_', '^CI$']
+  [security.http]
+    mediaTypes = ['application/font*', 'image/*', 'video/*']
+    
+# Markdown 渲染器
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true  # 允许在 Markdown 中使用 HTML
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    style = "github"

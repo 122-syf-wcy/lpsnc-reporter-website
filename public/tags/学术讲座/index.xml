@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>学术讲座 on 六盘水师范学院计算机科学学院记者团</title>
+    <link>http://localhost:1313/tags/%E5%AD%A6%E6%9C%AF%E8%AE%B2%E5%BA%A7/</link>
+    <description>Recent content in 学术讲座 on 六盘水师范学院计算机科学学院记者团</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 10 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E5%AD%A6%E6%9C%AF%E8%AE%B2%E5%BA%A7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>计算机科学学院举办人工智能学术讲座</title>
+      <link>http://localhost:1313/news/2025-ai-lecture/</link>
+      <pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/news/2025-ai-lecture/</guid>
+      <description>为帮助学生了解学科前沿动态，拓宽学术视野，计算机科学学院于3月10日邀请知名AI专家赵教授，在科技楼报告厅举办了一场关于生成式AI的学术讲座。</description>
+    </item>
+  </channel>
+</rss>

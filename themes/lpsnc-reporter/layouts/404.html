@@ -1,0 +1,74 @@
+{{ define "main" }}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-blue to-secondary-blue">
+    <div class="text-center text-white px-4">
+        <div class="mb-8">
+            <h1 class="text-9xl font-bold font-serif mb-4">404</h1>
+            <div class="w-24 h-1 bg-accent-orange mx-auto mb-4"></div>
+            <h2 class="text-3xl font-bold mb-2">页面未找到</h2>
+            <p class="text-xl text-blue-100 mb-8">抱歉，您访问的页面不存在或已被移动</p>
+        </div>
+        
+        <div class="space-y-4">
+            <!-- 返回首页按钮 -->
+            <a href="/" class="btn btn-primary inline-flex items-center space-x-2 bg-white text-primary-blue hover:bg-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span>返回首页</span>
+            </a>
+            
+            <!-- 搜索建议 -->
+            <div class="mt-8">
+                <p class="text-blue-100 mb-4">或者尝试搜索您要找的内容：</p>
+                <form class="flex max-w-md mx-auto" onsubmit="handleSearch(event)">
+                    <input type="text" id="error-search" placeholder="搜索新闻、活动..." 
+                           class="flex-grow px-4 py-2 rounded-l text-gray-800 focus:outline-none focus:ring-2 focus:ring-accent-orange">
+                    <button type="submit" 
+                            class="bg-accent-orange text-white px-6 py-2 rounded-r hover:bg-orange-600 transition-colors">
+                        搜索
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- 快速链接 -->
+        <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+            <a href="/news/" class="text-blue-100 hover:text-white transition-colors">
+                <div class="bg-white bg-opacity-10 rounded-lg p-4 hover:bg-opacity-20 transition-all">
+                    <div class="text-2xl mb-2">📰</div>
+                    <div class="text-sm">新闻中心</div>
+                </div>
+            </a>
+            <a href="/team/" class="text-blue-100 hover:text-white transition-colors">
+                <div class="bg-white bg-opacity-10 rounded-lg p-4 hover:bg-opacity-20 transition-all">
+                    <div class="text-2xl mb-2">👥</div>
+                    <div class="text-sm">记者团风采</div>
+                </div>
+            </a>
+            <a href="/join/" class="text-blue-100 hover:text-white transition-colors">
+                <div class="bg-white bg-opacity-10 rounded-lg p-4 hover:bg-opacity-20 transition-all">
+                    <div class="text-2xl mb-2">🚀</div>
+                    <div class="text-sm">加入我们</div>
+                </div>
+            </a>
+            <a href="/" class="text-blue-100 hover:text-white transition-colors">
+                <div class="bg-white bg-opacity-10 rounded-lg p-4 hover:bg-opacity-20 transition-all">
+                    <div class="text-2xl mb-2">🏠</div>
+                    <div class="text-sm">首页</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+function handleSearch(event) {
+    event.preventDefault();
+    const searchInput = document.getElementById('error-search');
+    if (searchInput && searchInput.value.trim()) {
+        const query = encodeURIComponent(searchInput.value + ' site:' + window.location.hostname);
+        window.open('https://www.google.com/search?q=' + query, '_blank');
+    }
+}
+</script>
+{{ end }}

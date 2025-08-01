@@ -1,0 +1,69 @@
+<nav class="bg-primary-blue text-white shadow-md">
+    <div class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+            <!-- Logo 和网站名称 -->
+            <div class="flex items-center space-x-3">
+                <a href="{{ .Site.BaseURL }}" class="flex items-center" title="返回首页" aria-label="六盘水师范学院计算机科学学院记者团首页">
+                    <img src="{{ "images/logo.png" | relURL }}" alt="记者团 Logo" class="h-10 w-auto" loading="lazy">
+                    <span class="ml-2 text-xl font-bold font-serif">{{ .Site.Title }}</span>
+                </a>
+            </div>
+            
+            <!-- 桌面端导航菜单 -->
+            <div class="hidden md:flex space-x-8">
+                {{ $currentPage := . }}
+                {{ range .Site.Menus.main }}
+                <a href="{{ .URL }}" class="py-2 text-white hover:text-accent-orange transition-colors {{ if $currentPage.IsMenuCurrent "main" . }}font-bold border-b-2 border-accent-orange{{ end }}" 
+                   title="访问{{ .Name }}页面" aria-label="导航到{{ .Name }}">
+                    {{ .Name }}
+                </a>
+                {{ end }}
+                
+                <!-- 搜索按钮 -->
+                <button id="search-button" class="py-2 text-white hover:text-accent-orange transition-colors" title="搜索" aria-label="打开搜索">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white focus:outline-none" title="打开菜单" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4" aria-label="移动端导航菜单">
+            <div class="flex flex-col space-y-3">
+                {{ range .Site.Menus.main }}
+                <a href="{{ .URL }}" class="py-2 text-white hover:text-accent-orange transition-colors {{ if $currentPage.IsMenuCurrent "main" . }}font-bold{{ end }}" 
+                   title="访问{{ .Name }}页面" aria-label="移动端导航到{{ .Name }}">
+                    {{ .Name }}
+                </a>
+                {{ end }}
+                
+                <!-- 移动端搜索按钮 -->
+                <button id="mobile-search-button" class="py-2 text-white hover:text-accent-orange transition-colors text-left" title="搜索" aria-label="打开搜索">
+                    搜索
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 搜索框 (默认隐藏) -->
+    <div id="search-container" class="hidden bg-gray-100 py-4 shadow-inner">
+        <div class="container mx-auto px-4">
+            <form id="search-form" class="flex" role="search">
+                <input type="text" id="search-input" placeholder="搜索新闻、活动..." class="flex-grow px-4 py-2 rounded-l focus:outline-none" aria-label="搜索关键词">
+                <button type="submit" class="bg-accent-orange text-white px-4 py-2 rounded-r hover:bg-orange-700 transition-colors" title="提交搜索" aria-label="提交搜索">
+                    搜索
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>

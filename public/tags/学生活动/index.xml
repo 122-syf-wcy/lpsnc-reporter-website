@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>学生活动 on 六盘水师范学院计算机科学学院记者团</title>
+    <link>http://localhost:1313/tags/%E5%AD%A6%E7%94%9F%E6%B4%BB%E5%8A%A8/</link>
+    <description>Recent content in 学生活动 on 六盘水师范学院计算机科学学院记者团</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 15 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E5%AD%A6%E7%94%9F%E6%B4%BB%E5%8A%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我校举办2025年度学生社团文化节开幕式</title>
+      <link>http://localhost:1313/news/2025-campus-festival/</link>
+      <pubDate>Sat, 15 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/news/2025-campus-festival/</guid>
+      <description>为丰富校园文化生活，展现学生社团风采，我校于3月15日在大礼堂隆重举办2025年度学生社团文化节开幕式。校领导及各院系师生代表参加了本次活动。</description>
+    </item>
+  </channel>
+</rss>

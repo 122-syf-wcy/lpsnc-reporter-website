@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>基础设施 on 六盘水师范学院计算机科学学院记者团</title>
+    <link>http://localhost:1313/tags/%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD/</link>
+    <description>Recent content in 基础设施 on 六盘水师范学院计算机科学学院记者团</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 28 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>图书馆升级改造工程圆满完成</title>
+      <link>http://localhost:1313/news/2025-library-renovation/</link>
+      <pubDate>Fri, 28 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/news/2025-library-renovation/</guid>
+      <description>历时6个月的图书馆升级改造工程于近日圆满完成，新增阅览座位500个，全面提升了学习环境。</description>
+    </item>
+  </channel>
+</rss>

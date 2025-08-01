@@ -1,0 +1,64 @@
+baseURL = 'https://example.org/'
+languageCode = 'zh-cn'
+title = '六盘水师范学院记者团'
+theme = 'lpsnc-reporter'
+
+# 菜单配置
+[menu]
+  [[menu.main]]
+    name = "首页"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "新闻中心"
+    url = "/news/"
+    weight = 2
+  [[menu.main]]
+    name = "记者团风采"
+    url = "/team/"
+    weight = 3
+  [[menu.main]]
+    name = "加入我们"
+    url = "/join/"
+    weight = 4
+
+[params]
+  description = "六盘水师范学院记者团官方网站"
+  keywords = "六盘水师范学院,记者团,校园新闻,学生媒体"
+  mainSections = ["news"]
+  
+  # 社交媒体链接
+  [params.social]
+    weibo = "https://weibo.com/example"
+    wechat = "记者团微信公众号"
+
+# 图片处理
+[imaging]
+  quality = 85
+  
+# 内容安全策略
+[security]
+  [security.funcs]
+    getenv = ['^HUGO_', '^CI$']
+  [security.http]
+    mediaTypes = ['application/font*', 'image/*', 'video/*']
+    
+# Markdown 渲染器
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true  # 允许在 Markdown 中使用 HTML
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    style = "github"
+
+# 构建配置
+[build]
+  writeStats = true
+  [build.processing]
+    [build.processing.css]
+      includePaths = ["assets/scss"]
+    [build.processing.js]
+      minify = true

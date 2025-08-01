@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义样式 */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+  
+  body {
+    @apply font-sans text-gray-800;
+  }
+}
+
+/* 组件样式 */
+@layer components {
+  .news-card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:scale-105;
+  }
+  
+  .news-card__image {
+    @apply w-full h-48 object-cover;
+  }
+  
+  .news-card__content {
+    @apply p-4;
+  }
+  
+  .news-card__title {
+    @apply text-lg font-bold font-serif line-clamp-2;
+  }
+  
+  .news-card__meta {
+    @apply flex justify-between text-sm text-gray-500 mt-2;
+  }
+  
+  .news-card__tag {
+    @apply bg-primary-blue text-white text-xs px-2 py-1 rounded;
+  }
+}

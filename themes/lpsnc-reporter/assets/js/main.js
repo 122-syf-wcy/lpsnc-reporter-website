@@ -124,7 +124,197 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('load', function() {
         document.body.classList.add('page-loaded');
     });
+
+    // 轮播图功能
+    initSlider();
 });
+
+// 轮播图初始化和功能
+function initSlider() {
+    const slider = document.querySelector('.hero-slider');
+    if (!slider) return;
+
+    const slides = slider.querySelectorAll('.slide');
+    const dots = slider.querySelectorAll('.dot');
+    const prevBtn = slider.querySelector('.slider-btn.prev');
+    const nextBtn = slider.querySelector('.slider-btn.next');
+
+    if (slides.length === 0) return;
+
+    let currentSlide = 0;
+    let isTransitioning = false;
+    let autoPlayInterval;
+
+    // 显示指定幻灯片
+    function showSlide(index, direction = null) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        // 移除所有活动状态
+        slides.forEach(slide => {
+            slide.classList.remove('active', 'slide-in-left', 'slide-in-right');
+        });
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        // 设置新的活动幻灯片
+        const newSlide = slides[index];
+        newSlide.classList.add('active');
+        
+        // 添加方向动画
+        if (direction === 'next') {
+            newSlide.classList.add('slide-in-right');
+        } else if (direction === 'prev') {
+            newSlide.classList.add('slide-in-left');
+        }
+
+        // 更新指示器
+        if (dots[index]) {
+            dots[index].classList.add('active');
+        }
+
+        currentSlide = index;
+
+        // 重置过渡状态
+        setTimeout(() => {
+            isTransitioning = false;
+        }, 800);
+    }
+
+    // 下一张
+    function nextSlide() {
+        const next = (currentSlide + 1) % slides.length;
+        showSlide(next, 'next');
+    }
+
+    // 上一张
+    function prevSlide() {
+        const prev = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prev, 'prev');
+    }
+
+    // 自动播放
+    function startAutoPlay() {
+        autoPlayInterval = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+        }
+    }
+
+    // 键盘控制
+    function handleKeyboard(e) {
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+            restartAutoPlay();
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+            restartAutoPlay();
+        }
+    }
+
+    // 重启自动播放
+    function restartAutoPlay() {
+        stopAutoPlay();
+        startAutoPlay();
+    }
+
+    // 事件监听器
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            restartAutoPlay();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            restartAutoPlay();
+        });
+    }
+
+    // 指示器点击
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            if (index !== currentSlide) {
+                const direction = index > currentSlide ? 'next' : 'prev';
+                showSlide(index, direction);
+                restartAutoPlay();
+            }
+        });
+    });
+
+    // 鼠标悬停暂停
+    slider.addEventListener('mouseenter', stopAutoPlay);
+    slider.addEventListener('mouseleave', startAutoPlay);
+
+    // 触摸支持
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    slider.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        stopAutoPlay();
+    }, { passive: true });
+
+    slider.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+        startAutoPlay();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+    }
+
+    // 键盘支持
+    document.addEventListener('keydown', handleKeyboard);
+
+    // 页面可见性API - 当页面不可见时暂停自动播放
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopAutoPlay();
+        } else {
+            startAutoPlay();
+        }
+    });
+
+    // 初始化
+    showSlide(0);
+    startAutoPlay();
+
+    // 预加载图片
+    slides.forEach((slide, index) => {
+        if (index > 0) {
+            const bgImage = slide.style.backgroundImage;
+            if (bgImage) {
+                const imageUrl = bgImage.slice(5, -2); // 移除 url(" 和 ")
+                const img = new Image();
+                img.src = imageUrl;
+            }
+        }
+    });
+
+    // 清理函数
+    window.addEventListener('beforeunload', () => {
+        stopAutoPlay();
+        document.removeEventListener('keydown', handleKeyboard);
+    });
+}
 
     // 返回顶部按钮 - 添加辅助功能属性
     const backToTopButton = document.getElementById('back-to-top');

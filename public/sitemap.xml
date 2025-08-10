@@ -103,8 +103,6 @@
   </url><url>
     <loc>http://localhost:1313/join/</loc>
   </url><url>
-    <loc>http://localhost:1313/admin/</loc>
-  </url><url>
     <loc>http://localhost:1313/team/</loc>
   </url>
 </urlset>

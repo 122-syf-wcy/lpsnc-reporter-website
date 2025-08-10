@@ -1,0 +1,21 @@
+backend:
+  name: proxy-to-api
+
+local_backend: true
+
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "news"
+    label: "新闻"
+    folder: "content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "标题", name: "title", widget: "string"}
+      - {label: "发布日期", name: "date", widget: "datetime"}
+      - {label: "描述", name: "description", widget: "string"}
+      - {label: "分类", name: "categories", widget: "list", default: ["校园要闻"]}
+      - {label: "标签", name: "tags", widget: "list"}
+      - {label: "内容", name: "body", widget: "markdown"}

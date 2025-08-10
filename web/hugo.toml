@@ -2,6 +2,7 @@ baseURL = 'https://example.org/'
 languageCode = 'zh-cn'
 title = '六盘水师范学院记者团'
 theme = 'lpsnc-reporter'
+paginate = 9
 
 # 菜单配置
 [menu]
@@ -62,3 +63,9 @@ theme = 'lpsnc-reporter'
       includePaths = ["assets/scss"]
     [build.processing.js]
       minify = true
+
+# 模块挂载：挂载根目录的 static 资源到当前站点，复用图片等静态文件
+[module]
+  [[module.mounts]]
+    source = "../static"
+    target = "static"

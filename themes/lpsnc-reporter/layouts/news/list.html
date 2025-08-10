@@ -28,12 +28,22 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {{ $paginator := .Paginate .Pages }}
             {{ range $paginator.Pages }}
-            <article class="news-card">
+            <article class="news-card {{ if not (or .Params.cover .Params.image) }}news-card--no-cover{{ end }}">
                 <a href="{{ .Permalink }}">
-                    {{ with .Params.image }}
+                    {{ with .Params.cover }}
                         <img src="{{ . | relURL }}" alt="{{ $.Title }}" class="news-card__image">
+                        <div class="news-card__cover-indicator">有封面</div>
                     {{ else }}
-                        <img src="https://via.placeholder.com/800x450.png/1E3A8A/FFFFFF?text=新闻图片" alt="默认新闻图片" class="news-card__image">
+                        {{ with .Params.image }}
+                            <img src="{{ . | relURL }}" alt="{{ $.Title }}" class="news-card__image">
+                        {{ else }}
+                            <div class="news-card__no-cover">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <span class="text-gray-500 text-sm mt-2">无封面</span>
+                            </div>
+                        {{ end }}
                     {{ end }}
                 </a>
                 <div class="news-card__content">

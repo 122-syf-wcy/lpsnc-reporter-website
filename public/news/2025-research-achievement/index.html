@@ -21,10 +21,10 @@
     
     
     
-    <link rel="stylesheet" href="/scss/main.min.59a1eb4c8fa5fd8330c2fc5524b8a2b982f7b77fc0cf9822bcef55c5a4851383.css" integrity="sha256-WaHrTI&#43;l/YMwwvxVJLiiuYL3t3/Az5givO9VxaSFE4M=" crossorigin="anonymous">
+    <link rel="stylesheet" href="/scss/main.min.45707b52a5b52d45760ba35e557706edca4caece3f5751cfc8ae7952f16400e2.css" integrity="sha256-RXB7UqW1LUV2C6NeVXcG7cpMrs4/V1HPyK55UvFkAOI=" crossorigin="anonymous">
     
     
-    <link rel="preload" href="/scss/main.min.59a1eb4c8fa5fd8330c2fc5524b8a2b982f7b77fc0cf9822bcef55c5a4851383.css" as="style" crossorigin="anonymous">
+    <link rel="preload" href="/scss/main.min.45707b52a5b52d45760ba35e557706edca4caece3f5751cfc8ae7952f16400e2.css" as="style" crossorigin="anonymous">
     
     
     <meta property="og:title" content="化学学院在新能源材料研究领域取得重大突破 | 六盘水师范学院计算机科学学院记者团">
@@ -54,7 +54,7 @@
             
             <div class="flex items-center space-x-3">
                 <a href="http://localhost:1313/" class="flex items-center" title="返回首页" aria-label="六盘水师范学院计算机科学学院记者团首页">
-                    <img src="/images/logo.png" alt="记者团 Logo" class="h-10 w-auto" loading="lazy">
+                    <img src="/images/logo.jpg" alt="记者团 Logo" class="h-10 w-auto" loading="lazy">
                     <span class="ml-2 text-xl font-bold font-serif">六盘水师范学院计算机科学学院记者团</span>
                 </a>
             </div>
@@ -175,7 +175,9 @@
         
         <article class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
             
-                <img src="/images/news/research-achievement.jpg" alt="化学学院在新能源材料研究领域取得重大突破" class="w-full h-64 md:h-96 object-cover">
+                
+                    <img src="/images/news/research-achievement.jpg" alt="化学学院在新能源材料研究领域取得重大突破" class="w-full h-64 md:h-96 object-cover">
+                
             
             
             <div class="p-6 md:p-8">
@@ -218,7 +220,9 @@
                 
                 
                 <div class="prose max-w-none text-gray-700 leading-relaxed">
-                    <p>近日，我校化学学院王建华教授团队在新能源材料研究领域取得重大突破，成功开发出一种新型高性能锂电池正极材料。该研究成果以&quot;High-Performance Cathode Materials for Next-Generation Lithium-Ion Batteries&quot;为题，发表在国际材料科学顶级期刊《Nature Energy》上。</p>
+                    
+                        
+                        <p>近日，我校化学学院王建华教授团队在新能源材料研究领域取得重大突破，成功开发出一种新型高性能锂电池正极材料。该研究成果以&quot;High-Performance Cathode Materials for Next-Generation Lithium-Ion Batteries&quot;为题，发表在国际材料科学顶级期刊《Nature Energy》上。</p>
 <h2 id="研究成果">研究成果</h2>
 <p><strong>技术突破</strong>
 该团队历时3年，通过独创的纳米复合材料设计策略，成功合成了一种新型磷酸铁锂复合材料。该材料具有：</p>
@@ -235,6 +239,7 @@
 <p>王建华教授团队多年来专注于新能源材料研究，已发表SCI论文50余篇，申请发明专利15项。团队成员包括教授2人、副教授3人、博士研究生8人、硕士研究生15人。</p>
 <p>本项研究得到了国家自然科学基金重点项目、省科技重大专项等资助。校长在祝贺信中表示：&ldquo;这一成果充分体现了我校在基础科学研究方面的实力，为学校双一流建设增添了新的亮点。&rdquo;</p>
 
+                    
                 </div>
                 
                 
@@ -355,6 +360,47 @@
     </div>
 </div>
 
+
+<script>
+
+function parseMarkdown(text) {
+    if (!text) return '';
+    
+    return text
+        
+        .replace(/^### (.*$)/gim, '<h3 style="font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 1rem 0; color: #374151;">$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2 style="font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1rem 0; color: #1f2937; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem;">$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1 style="font-size: 2rem; font-weight: 800; margin: 2rem 0 1rem 0; color: #111827;">$1</h1>')
+        
+        .replace(/\*\*(.*?)\*\*/gim, '<strong style="font-weight: 700; color: #1f2937;">$1</strong>')
+        .replace(/\*(.*?)\*/gim, '<em style="font-style: italic; color: #4b5563;">$1</em>')
+        
+        .replace(/\[([^\]]*)\]\(([^\)]*)\)/gim, '<a href="$2" target="_blank" style="color: #2563eb; text-decoration: underline; hover:color: #1d4ed8;">$1</a>')
+        
+        .replace(/!\[([^\]]*)\]\(([^\)]*)\)/gim, '<img src="$2" alt="$1" style="max-width: 100%; height: auto; border-radius: 8px; margin: 1rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">')
+        
+        .replace(/`([^`]*)`/gim, '<code style="background: #f3f4f6; color: #1f2937; padding: 0.25rem 0.5rem; border-radius: 0.375rem; font-family: ui-monospace, monospace; font-size: 0.875rem;">$1</code>')
+        
+        .replace(/^\* (.+)/gim, '<li style="margin: 0.5rem 0; padding-left: 0.5rem;">$1</li>')
+        .replace(/(<li[^>]*>.*<\/li>)/s, '<ul style="margin: 1rem 0; padding-left: 1.5rem; list-style-type: disc;">$1</ul>')
+        
+        .replace(/\n/gim, '<br>');
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const markdownContent = document.getElementById('markdown-content');
+    if (markdownContent) {
+        const markdownText = markdownContent.getAttribute('data-markdown');
+        if (markdownText) {
+            const htmlContent = parseMarkdown(markdownText);
+            markdownContent.innerHTML = htmlContent;
+        }
+    }
+});
+</script>
+
+
     </main>
     
     
@@ -419,8 +465,7 @@
                 <h3 class="text-xl font-bold mb-4 font-serif">联系我们</h3>
                 <address class="not-italic">
                     <p class="mb-2">地址：贵州省六盘水市钟山区</p>
-                    <p class="mb-2">电话：0858-xxxxxxxx</p>
-                    <p class="mb-2">邮箱：reporter@lpssysu.edu.cn</p>
+                    <p class="mb-2">邮箱：2322640874@qq.com</p>
                 </address>
             </div>
         </div>
@@ -436,6 +481,6 @@
     
     
     
-    <script src="/js/main.min.6ad9c807b27190a1b4ca8e30a35a7dc1c44eec8b1afffea7834949029fe3a5e8.js" integrity="sha256-atnIB7JxkKG0yo4wo1p9wcRO7Isa//6ng0lJAp/jpeg="></script>
+    <script src="/js/main.min.b793b5bcd57e3664feb78fe0fcb792ea791b9b9e2f30e3534840c350bc81ced4.js" integrity="sha256-t5O1vNV&#43;NmT&#43;t4/g/LeS6nkbm54vMONTSEDDULyBztQ="></script>
 </body>
 </html>

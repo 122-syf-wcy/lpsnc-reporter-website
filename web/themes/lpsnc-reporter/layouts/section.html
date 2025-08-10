@@ -1,8 +1,56 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  {{ range .Pages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-    {{ .Summary }}
-  {{ end }}
+  <section class="container mx-auto px-4 py-10">
+    <h1 class="text-3xl md:text-4xl font-bold mb-6 font-serif">{{ .Title }}</h1>
+    {{ with .Content }}<div class="prose max-w-none mb-8">{{ . }}</div>{{ end }}
+
+    <!-- 分类筛选入口（跳转到分类页） -->
+    {{ with site.Taxonomies.categories }}
+      <div class="mb-6 flex flex-wrap gap-2">
+        {{ range $name, $_ := . }}
+          <a class="text-sm px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700" href="/categories/{{ $name | urlize }}/"># {{ $name }}</a>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    <!-- 搜索提示（使用导航搜索框即可） -->
+    <p class="text-sm text-gray-500 mb-4">可使用右上角搜索框筛选本页新闻（前端即时过滤）。</p>
+
+    <!-- 分页列表 -->
+    {{ $paginator := .Paginate (.Pages.ByDate.Reverse) }}
+    <div id="news-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {{ range $paginator.Pages }}
+        {{ $p := . }}
+        <article class="news-card">
+          {{ with $p.Params.image }}
+            <a href="{{ $p.RelPermalink }}"><img src="{{ . | relURL }}" alt="{{ $p.Title }}" class="news-card__image"></a>
+          {{ end }}
+          <div class="news-card__content">
+            <span class="news-card__tag">{{ index $p.Params.categories 0 }}</span>
+            <h2 class="news-card__title mt-2"><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h2>
+            <div class="news-card__meta">
+              <time>{{ $p.Date.Format "2006-01-02" }}</time>
+              {{ with $p.Params.author }}<span>{{ . }}</span>{{ end }}
+            </div>
+          </div>
+        </article>
+      {{ end }}
+    </div>
+
+    <!-- 分页导航 -->
+    {{ with $paginator }}
+      <nav class="mt-10 flex items-center justify-center gap-2" aria-label="Pagination">
+        {{ if .HasPrev }}
+          <a class="px-3 py-1 border rounded hover:bg-gray-100" href="{{ .Prev.URL }}">上一页</a>
+        {{ else }}
+          <span class="px-3 py-1 border rounded text-gray-400">上一页</span>
+        {{ end }}
+        <span class="px-3 py-1">第 {{ .PageNumber }} / {{ .TotalPages }} 页</span>
+        {{ if .HasNext }}
+          <a class="px-3 py-1 border rounded hover:bg-gray-100" href="{{ .Next.URL }}">下一页</a>
+        {{ else }}
+          <span class="px-3 py-1 border rounded text-gray-400">下一页</span>
+        {{ end }}
+      </nav>
+    {{ end }}
+  </section>
 {{ end }}

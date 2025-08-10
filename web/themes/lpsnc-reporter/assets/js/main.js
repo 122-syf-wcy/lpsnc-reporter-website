@@ -29,4 +29,31 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 滚动时检查
   window.addEventListener('scroll', checkFade);
+
+  // 简易前端搜索：在 /news/ 页面根据 ?q= 过滤卡片
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const query = (params.get('q') || '').trim().toLowerCase();
+    if (query && window.location.pathname.startsWith('/news')) {
+      const cards = document.querySelectorAll('#news-list article.news-card');
+      let anyVisible = false;
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        const match = text.includes(query);
+        card.style.display = match ? '' : 'none';
+        if (match) anyVisible = true;
+      });
+      if (!anyVisible) {
+        const container = document.getElementById('news-list');
+        if (container) {
+          const empty = document.createElement('div');
+          empty.className = 'col-span-full text-center text-gray-500';
+          empty.textContent = '未找到匹配的新闻';
+          container.appendChild(empty);
+        }
+      }
+    }
+  } catch (e) {
+    console.warn('search init failed', e);
+  }
 });

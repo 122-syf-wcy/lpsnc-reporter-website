@@ -725,6 +725,7 @@ input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
 .member-avatar.blue { background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)); }
 .member-avatar.green { background: linear-gradient(135deg, var(--accent-green), var(--success-green)); }
 .member-avatar.purple { background: linear-gradient(135deg, var(--accent-pink), #f472b6); }
+.member-avatar.orange { background: linear-gradient(135deg, var(--accent-orange), #fb923c); }
 
 .member-tag {
   background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
@@ -776,6 +777,46 @@ input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
   color: var(--text-secondary);
   font-weight: 600;
   font-size: 1.1rem;
+}
+
+/* 新闻卡片增强样式 */
+.news-card {
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.news-card__no-cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background: #f9fafb;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+}
+
+.news-card--no-cover {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.news-card__cover-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(34, 197, 94, 0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 /* 增强的功能图标样式 */
@@ -1001,8 +1042,283 @@ html {
   }
 }
 
+/* 轮播图样式 */
+.hero-slider {
+  position: relative;
+  height: 80vh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: var(--primary-blue);
+}
+
+.slider-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 1;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.slide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 58, 138, 0.5);
+  background: linear-gradient(
+    135deg,
+    rgba(30, 58, 138, 0.6) 0%,
+    rgba(59, 130, 246, 0.4) 50%,
+    rgba(96, 165, 250, 0.3) 100%
+  );
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.hero-content h1 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content p {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* 轮播指示器 */
+.slider-dots {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 10;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.dot.active {
+  background: white;
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.1);
+}
+
+/* 轮播箭头 */
+.slider-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.slider-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+}
+
+.slider-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.slider-btn:active {
+  transform: scale(0.95);
+}
+
+/* 轮播图动画 */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide.slide-in-right {
+  animation: slideInFromRight 0.8s ease-out;
+}
+
+.slide.slide-in-left {
+  animation: slideInFromLeft 0.8s ease-out;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .hero-slider {
+    height: 70vh;
+    min-height: 500px;
+  }
+  
+  .slider-nav {
+    padding: 0 1rem;
+  }
+  
+  .slider-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .slider-dots {
+    bottom: 1.5rem;
+    gap: 0.5rem;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-slider {
+    height: 60vh;
+    min-height: 400px;
+  }
+  
+  .slider-nav {
+    display: none;
+  }
+  
+  .hero-content h1 {
+    font-size: 1.75rem;
+  }
+  
+  .hero-content p {
+    font-size: 1rem;
+  }
+}
+
+/* 轮播图加载状态 */
+.slide.loading {
+  background-color: var(--gray-300);
+  background-image: linear-gradient(
+    45deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.5) 25%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 50%,
+    transparent 75%,
+    rgba(255, 255, 255, 0.5) 75%
+  );
+  background-size: 20px 20px;
+  animation: loading-stripes 1s linear infinite;
+}
+
+@keyframes loading-stripes {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 20px 20px;
+  }
+}
+
 /* 减少动画的偏好设置 */
 @media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: opacity 0.1s ease-in-out;
+  }
+  
+  .dot, .slider-btn {
+    transition: none;
+  }
+  
+  .slide.slide-in-right,
+  .slide.slide-in-left {
+    animation: none;
+  }
+  
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

@@ -1,0 +1,356 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>管理员登录 - 记者团内容管理系统</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .login-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #2c5aa0, #3b82f6);
+      border-radius: 20px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 32px;
+    }
+    
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+    
+    .form-group input:focus {
+      outline: none;
+      border-color: #2c5aa0;
+    }
+    
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #2c5aa0, #3b82f6);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-bottom: 20px;
+    }
+    
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(44, 90, 160, 0.3);
+    }
+    
+    .login-btn:active {
+      transform: translateY(0);
+    }
+    
+    .login-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .error-message {
+      background: #fee;
+      color: #c53030;
+      padding: 12px;
+      border-radius: 8px;
+      border-left: 4px solid #c53030;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .back-link {
+      color: #2c5aa0;
+      text-decoration: none;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.3s ease;
+    }
+    
+    .back-link:hover {
+      color: #1e3f73;
+    }
+    
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .features {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .feature-icon {
+      width: 16px;
+      height: 16px;
+      background: #2c5aa0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo">📰</div>
+    
+    <h1 class="title">管理员登录</h1>
+    <p class="subtitle">六盘水师范学院计算机科学学院记者团内容管理系统</p>
+    
+    <form id="loginForm">
+      <div class="error-message" id="errorMessage"></div>
+      
+      <div class="form-group">
+        <label for="username">管理员账号</label>
+        <input 
+          type="text" 
+          id="username" 
+          name="username" 
+          required 
+          autocomplete="username"
+          placeholder="请输入管理员账号"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="password">登录密码</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          required 
+          autocomplete="current-password"
+          placeholder="请输入登录密码"
+        >
+      </div>
+      
+      <button type="submit" class="login-btn" id="loginBtn">
+        <span id="loginText">登录管理后台</span>
+        <span id="loginLoading" class="loading" style="display: none;"></span>
+      </button>
+    </form>
+    
+    <a href="/" class="back-link">
+      ← 返回网站首页
+    </a>
+    
+    <div class="features">
+      <div class="feature-item">
+        <div class="feature-icon">✓</div>
+        <span>新闻文章管理</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">✓</div>
+        <span>记者团风采管理</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">✓</div>
+        <span>组织架构编辑</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 固定的登录凭据
+    const ADMIN_CREDENTIALS = {
+      username: 'lpssfxyjzt',
+      password: 'amdin123'
+    };
+
+    // 检查是否已经登录
+    function checkExistingLogin() {
+      const loginStatus = localStorage.getItem('admin_logged_in');
+      const loginTime = localStorage.getItem('admin_login_time');
+      
+      if (loginStatus === 'true' && loginTime) {
+        const now = new Date().getTime();
+        const loginTimeMs = parseInt(loginTime);
+        
+        // 登录有效期为24小时
+        if (now - loginTimeMs < 24 * 60 * 60 * 1000) {
+          // 已经登录且未过期，直接跳转到管理后台
+          window.location.href = '/admin/';
+          return;
+        } else {
+          // 登录过期，清除状态
+          localStorage.removeItem('admin_logged_in');
+          localStorage.removeItem('admin_login_time');
+        }
+      }
+    }
+
+    // 显示错误消息
+    function showError(message) {
+      const errorElement = document.getElementById('errorMessage');
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+      
+      // 3秒后自动隐藏
+      setTimeout(() => {
+        errorElement.style.display = 'none';
+      }, 3000);
+    }
+
+    // 设置加载状态
+    function setLoading(isLoading) {
+      const btn = document.getElementById('loginBtn');
+      const text = document.getElementById('loginText');
+      const loading = document.getElementById('loginLoading');
+      
+      if (isLoading) {
+        btn.disabled = true;
+        text.style.display = 'none';
+        loading.style.display = 'inline-block';
+      } else {
+        btn.disabled = false;
+        text.style.display = 'inline';
+        loading.style.display = 'none';
+      }
+    }
+
+    // 处理登录
+    function handleLogin(username, password) {
+      setLoading(true);
+      
+      // 模拟网络请求延迟
+      setTimeout(() => {
+        if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+          // 登录成功
+          localStorage.setItem('admin_logged_in', 'true');
+          localStorage.setItem('admin_login_time', new Date().getTime().toString());
+          localStorage.setItem('admin_username', username);
+          
+          // 跳转到管理后台
+          window.location.href = '/admin/';
+        } else {
+          // 登录失败
+          setLoading(false);
+          showError('账号或密码错误，请重新输入');
+          document.getElementById('password').value = '';
+          document.getElementById('password').focus();
+        }
+      }, 1000);
+    }
+
+    // 表单提交事件
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      
+      if (!username || !password) {
+        showError('请输入账号和密码');
+        return;
+      }
+      
+      handleLogin(username, password);
+    });
+
+    // 页面加载时检查登录状态
+    document.addEventListener('DOMContentLoaded', function() {
+      checkExistingLogin();
+      
+      // 自动聚焦到账号输入框
+      document.getElementById('username').focus();
+    });
+
+    // 按回车键快速登录
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+      }
+    });
+  </script>
+</body>
+</html>

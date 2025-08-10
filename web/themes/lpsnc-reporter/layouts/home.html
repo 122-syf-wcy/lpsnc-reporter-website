@@ -1,7 +1,45 @@
 {{ define "main" }}
-  {{ .Content }}
-  {{ range site.RegularPages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-    {{ .Summary }}
-  {{ end }}
+  <!-- Hero -->
+  <section class="bg-gradient-to-r from-primary-blue to-blue-700 text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">{{ .Site.Title }}</h1>
+      <p class="text-xl md:text-2xl max-w-3xl mx-auto">记录校园精彩瞬间，传播青春正能量</p>
+      <div class="mt-8">
+        <a href="/news" class="bg-accent-orange hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors inline-block mr-4">浏览新闻</a>
+        <a href="/join" class="bg-white hover:bg-gray-100 text-primary-blue font-bold py-3 px-6 rounded-lg shadow-lg transition-colors inline-block">加入我们</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mx-auto px-4 py-12">
+    <h2 class="text-2xl md:text-3xl font-bold mb-6 font-serif">最新新闻</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {{ $news := where site.RegularPages "Section" "news" }}
+      {{ range first 6 (sort $news "Date" "desc") }}
+        {{ $p := . }}
+        <article class="news-card">
+          {{ with $p.Params.image }}
+            <a href="{{ $p.RelPermalink }}"><img src="{{ . | relURL }}" alt="{{ $p.Title }}" class="news-card__image"></a>
+          {{ end }}
+          <div class="news-card__content">
+            <span class="news-card__tag">{{ index $p.Params.categories 0 }}</span>
+            <h3 class="news-card__title mt-2"><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
+            <div class="news-card__meta">
+              <time>{{ $p.Date.Format "2006-01-02" }}</time>
+              {{ with $p.Params.author }}<span>{{ . }}</span>{{ end }}
+            </div>
+          </div>
+        </article>
+      {{ end }}
+    </div>
+
+    <div class="text-center mt-8">
+      <a href="/news/" class="text-primary-blue hover:text-accent-orange font-bold inline-flex items-center transition-colors">
+        查看更多新闻
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </a>
+    </div>
+  </section>
 {{ end }}

@@ -1,10 +1,25 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
+  <article class="container mx-auto px-4 py-10 prose max-w-none">
+    <header class="mb-6">
+      <h1 class="text-3xl md:text-4xl font-bold font-serif">{{ .Title }}</h1>
+      <div class="text-gray-500 text-sm mt-2">
+        <time datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}">{{ .Date.Format "2006-01-02" }}</time>
+        {{ with .Params.author }} · <span>{{ . }}</span>{{ end }}
+      </div>
+    </header>
 
-  {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
-  {{ $dateHuman := .Date | time.Format ":date_long" }}
-  <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+    {{ with .Params.image }}
+      <img src="{{ . | relURL }}" alt="{{ $.Title }}" class="w-full rounded-lg shadow mb-6">
+    {{ end }}
 
-  {{ .Content }}
-  {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
+    {{ .Content }}
+
+    {{ with .Params.tags }}
+      <div class="mt-8 flex flex-wrap gap-2">
+        {{ range . }}
+          <span class="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded"># {{ . }}</span>
+        {{ end }}
+      </div>
+    {{ end }}
+  </article>
 {{ end }}
